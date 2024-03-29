@@ -3,10 +3,11 @@ package dungeonmania.entities.collectables;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.inventory.InventoryItem;
+import dungeonmania.entities.movable.OverlapAction;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public class Arrow extends Entity implements InventoryItem {
+public class Arrow extends Entity implements InventoryItem, OverlapAction {
     public Arrow(Position position) {
         super(position);
     }
@@ -25,13 +26,4 @@ public class Arrow extends Entity implements InventoryItem {
         }
     }
 
-    @Override
-    public void onMovedAway(GameMap map, Entity entity) {
-        return;
-    }
-
-    @Override
-    public void onDestroy(GameMap gameMap) {
-        return;
-    }
 }

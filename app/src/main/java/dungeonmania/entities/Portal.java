@@ -5,10 +5,11 @@ import java.util.stream.Collectors;
 
 import dungeonmania.entities.enemies.Mercenary;
 import dungeonmania.entities.enemies.ZombieToast;
+import dungeonmania.entities.movable.OverlapAction;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public class Portal extends Entity {
+public class Portal extends Entity implements OverlapAction {
     private ColorCodedType color;
     private Portal pair;
 
@@ -73,15 +74,5 @@ public class Portal extends Entity {
         if (portal != null) {
             portal.bind(this);
         }
-    }
-
-    @Override
-    public void onMovedAway(GameMap map, Entity entity) {
-        return;
-    }
-
-    @Override
-    public void onDestroy(GameMap gameMap) {
-        return;
     }
 }

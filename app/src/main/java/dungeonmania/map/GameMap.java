@@ -15,6 +15,9 @@ import dungeonmania.entities.Switch;
 import dungeonmania.entities.collectables.Bomb;
 import dungeonmania.entities.enemies.Enemy;
 import dungeonmania.entities.enemies.ZombieToastSpawner;
+import dungeonmania.entities.movable.DestroyAction;
+import dungeonmania.entities.movable.MovedAwayAction;
+import dungeonmania.entities.movable.OverlapAction;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -105,8 +108,8 @@ public class GameMap {
     private void triggerMovingAwayEvent(Entity entity) {
         List<Runnable> callbacks = new ArrayList<>();
         getEntities(entity.getPosition()).forEach(e -> {
-            if (e != entity)
-                callbacks.add(() -> e.onMovedAway(this, entity));
+            if (e != entity && e instanceof MovedAwayAction)
+                callbacks.add(() -> ((MovedAwayAction) e).onMovedAway(this, entity));
         });
         callbacks.forEach(callback -> {
             callback.run();
@@ -116,8 +119,8 @@ public class GameMap {
     private void triggerOverlapEvent(Entity entity) {
         List<Runnable> overlapCallbacks = new ArrayList<>();
         getEntities(entity.getPosition()).forEach(e -> {
-            if (e != entity)
-                overlapCallbacks.add(() -> e.onOverlap(this, entity));
+            if (e != entity && e instanceof OverlapAction)
+                overlapCallbacks.add(() -> ((OverlapAction) e).onOverlap(this, entity));
         });
         overlapCallbacks.forEach(callback -> {
             callback.run();
@@ -197,7 +200,10 @@ public class GameMap {
 
     public void destroyEntity(Entity entity) {
         removeNode(entity);
-        entity.onDestroy(this);
+        if (entity instanceof DestroyAction) {
+            ((DestroyAction) entity).onDestroy(this);
+        }
+//        entity.onDestroy(this);
     }
 
     public void addEntity(Entity entity) {

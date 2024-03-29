@@ -1,5 +1,6 @@
 package dungeonmania.entities;
 
+import dungeonmania.entities.movable.OverlapAction;
 import dungeonmania.map.GameMap;
 
 import dungeonmania.entities.collectables.Key;
@@ -7,7 +8,7 @@ import dungeonmania.entities.enemies.Spider;
 import dungeonmania.entities.inventory.Inventory;
 import dungeonmania.util.Position;
 
-public class Door extends Entity {
+public class Door extends Entity implements OverlapAction {
     private boolean open = false;
     private int number;
 
@@ -54,13 +55,4 @@ public class Door extends Entity {
         open = true;
     }
 
-    @Override
-    public void onMovedAway(GameMap map, Entity entity) {
-        return;
-    }
-
-    @Override
-    public void onDestroy(GameMap gameMap) {
-        return;
-    }
 }

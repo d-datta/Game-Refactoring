@@ -6,10 +6,11 @@ import dungeonmania.entities.BattleItem;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.inventory.InventoryItem;
+import dungeonmania.entities.movable.OverlapAction;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public abstract class Potion extends Entity implements InventoryItem, BattleItem {
+public abstract class Potion extends Entity implements InventoryItem, BattleItem, OverlapAction {
     private int duration;
 
     public Potion(Position position, int duration) {
@@ -29,16 +30,6 @@ public abstract class Potion extends Entity implements InventoryItem, BattleItem
                 return;
             map.destroyEntity(this);
         }
-    }
-
-    @Override
-    public void onDestroy(GameMap gameMap) {
-        return;
-    }
-
-    @Override
-    public void onMovedAway(GameMap map, Entity entity) {
-        return;
     }
 
     @Override
