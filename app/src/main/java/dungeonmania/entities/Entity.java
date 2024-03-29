@@ -1,16 +1,23 @@
 package dungeonmania.entities;
 
+import dungeonmania.entities.movable.DestroyAction;
+import dungeonmania.entities.movable.MovedAwayAction;
+import dungeonmania.entities.movable.OverlapAction;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import java.util.UUID;
 
-public abstract class Entity {
+public class Entity {
     public static final int FLOOR_LAYER = 0;
     public static final int ITEM_LAYER = 1;
     public static final int DOOR_LAYER = 2;
     public static final int CHARACTER_LAYER = 3;
+
+    private final DestroyAction destroyAction = null;
+    private final OverlapAction overlapAction = null;
+    private final MovedAwayAction movedAwayAction = null;
 
     private Position position;
     private Position previousPosition;
@@ -45,13 +52,6 @@ public abstract class Entity {
     public void translate(Position offset) {
         this.position = Position.translateBy(this.position, offset);
     }
-
-
-    public abstract void onOverlap(GameMap map, Entity entity);
-
-    public abstract void onMovedAway(GameMap map, Entity entity);
-
-    public abstract void onDestroy(GameMap gameMap);
 
     public Position getPosition() {
         return position;
