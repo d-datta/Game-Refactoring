@@ -21,10 +21,40 @@ public class Mercenary extends Enemy implements Interactable {
     private double allyAttack;
     private double allyDefence;
     private boolean allied = false;
-    boolean isAdjacentToPlayer = false;
+
+    public int getBribeAmount() {
+        return bribeAmount;
+    }
+
+    public int getBribeRadius() {
+        return bribeRadius;
+    }
+
+    public double getAllyAttack() {
+        return allyAttack;
+    }
+
+    public double getAllyDefence() {
+        return allyDefence;
+    }
+
+    public boolean isAdjacentToPlayer() {
+        return isAdjacentToPlayer;
+    }
+
+    public MoveStrategy getMoveStrategy() {
+        return moveStrategy;
+    }
+
+    public void setAdjacentToPlayer(boolean adjacentToPlayer) {
+        isAdjacentToPlayer = adjacentToPlayer;
+    }
+
+    private boolean isAdjacentToPlayer = false;
     private final MoveStrategy moveStrategy;
+
     public Mercenary(Position position, double health, double attack, int bribeAmount, int bribeRadius,
-            double allyAttack, double allyDefence) {
+                     double allyAttack, double allyDefence) {
         super(position, health, attack);
         this.bribeAmount = bribeAmount;
         this.bribeRadius = bribeRadius;
@@ -46,6 +76,7 @@ public class Mercenary extends Enemy implements Interactable {
 
     /**
      * check whether the current merc can be bribed
+     *
      * @param player
      * @return
      */
@@ -73,7 +104,7 @@ public class Mercenary extends Enemy implements Interactable {
 
     @Override
     public void move(Game game) {
-        moveStrategy.move(this,game);
+        moveStrategy.move(this, game);
     }
 
     @Override
@@ -87,4 +118,5 @@ public class Mercenary extends Enemy implements Interactable {
             return super.getBattleStatistics();
         return new BattleStatistics(0, allyAttack, allyDefence, 1, 1);
     }
+
 }

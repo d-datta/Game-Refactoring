@@ -20,6 +20,7 @@ public class ZombieToast extends Enemy {
     private Random randGen = new Random();
 
     private final MoveStrategy moveStrategy;
+
     public ZombieToast(Position position, double health, double attack) {
 
         super(position, health, attack);
@@ -28,6 +29,6 @@ public class ZombieToast extends Enemy {
 
     @Override
     public void move(Game game) {
-        moveStrategy.move(this,game);
+        moveStrategy.move(this, game);
     }
 }

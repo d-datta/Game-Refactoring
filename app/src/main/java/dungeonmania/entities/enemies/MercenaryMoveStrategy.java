@@ -16,15 +16,15 @@ public class MercenaryMoveStrategy implements MoveStrategy {
 
     @Override
     public void move(Enemy enemy, Game game) {
-        Mercenary mercenary=(Mercenary) enemy;
+        Mercenary mercenary = (Mercenary) enemy;
         Position nextPos;
         GameMap map = game.getMap();
         Player player = game.getPlayer();
         if (mercenary.isAllied()) {
-            nextPos = mercenary.isAdjacentToPlayer ? player.getPreviousDistinctPosition()
+            nextPos = mercenary.isAdjacentToPlayer() ? player.getPreviousDistinctPosition()
                     : map.dijkstraPathFind(mercenary.getPosition(), player.getPosition(), mercenary);
-            if (!mercenary.isAdjacentToPlayer && Position.isAdjacent(player.getPosition(), nextPos))
-                mercenary.isAdjacentToPlayer = true;
+            if (!mercenary.isAdjacentToPlayer() && Position.isAdjacent(player.getPosition(), nextPos))
+                mercenary.setAdjacentToPlayer(true);
         } else if (map.getPlayer().getEffectivePotion() instanceof InvisibilityPotion) {
             // Move randomly
             Random randGen = new Random();
