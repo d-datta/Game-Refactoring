@@ -16,7 +16,10 @@ public class ZombieToastMoveStrategy implements MoveStrategy {
         Position nextPos;
         GameMap map = game.getMap();
         if (map.getPlayer().getEffectivePotion() instanceof InvincibilityPotion) {
-            Position plrDiff = Position.calculatePositionBetween(map.getPlayer().getPosition(), zombietoast.getPosition());
+            Position plrDiff = Position.calculatePositionBetween(
+                    map.getPlayer().getPosition(),
+                    zombietoast.getPosition()
+            );
 
             Position moveX = (plrDiff.getX() >= 0) ? Position.translateBy(zombietoast.getPosition(), Direction.RIGHT)
                     : Position.translateBy(zombietoast.getPosition(), Direction.LEFT);
