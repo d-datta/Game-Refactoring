@@ -96,10 +96,13 @@ Overall, the implementation of the Observer Pattern in the `Switch` class enable
 > i. Name the code smell present in the above code. Identify all subclasses of Entity which have similar code smells that point towards the same root cause.
 
 [Answer]
-
+- The code smell present in the above code is called "Empty Override". It occurs when a method is overridden in a subclass, but the overridden method does nothing except returning or performing a no-op action. This indicates that the method might not be necessary in the subclass or that there is a design issue where some subclasses inherit methods that they don't need
+- Subclasses of Entity that have similar code smells include: Wall, Door, Treasure etc.
 > ii. Redesign the inheritance structure to solve the problem, in doing so remove the smells.
 
 [Briefly explain what you did]
+
+> To redesign the inheritance structure and address the code smells, we can use composition and interfaces to separate concerns and allow for more flexible behavior. We can create separate interface  for specific behavior, like movable, and then have entities implement these interfaces as needed.
 
 ### d) More Code Smells
 
@@ -130,6 +133,7 @@ By adhering to the common **`Collectable`** interface, I established consistent 
 Overall, the refactoring introduced a more modular and maintainable design for handling the picking up of items in the game. It decoupled the pickup logic from individual collectable entity classes, making the codebase more extensible and easier to maintain.
 
 
+
 ### e) Open-Closed Goals
 
 [Links to your merge requests](/put/links/here)
@@ -138,15 +142,35 @@ Overall, the refactoring introduced a more modular and maintainable design for h
 
 [Answer]
 
+- The design using a single Goal class with a large switch statement for handling different goal types has some limitations:
+  - Limited Maintainability: Adding new goal types requires modifying the switch statement, making the code less maintainable.
+  - Lack of Flexibility: It's not easy to extend the code with new goal creation logic separate from the main Goal class.
+ - Open-Closed Principle (OCP) Violation: The code doesn't strictly violate OCP because it might be possible to add new cases to the switch statement for new goal types. However, this approach becomes cumbersome and error-prone as the number of goal types grows.
+ - A suitable design pattern for this scenario is the Composite Pattern.
 > ii. If you think the design is sufficient as it is, justify your decision. If you think the answer is no, pick a suitable Design Pattern that would improve the quality of the code and refactor the code accordingly.
 
 [Briefly explain what you did]
+
+> So there will be abstract goal factory and GoalFacory will be using
+this to create simple or complex goals.
+And each goal type like AND, OR Exit will implement this abstract factory.
 
 ### f) Open Refactoring
 
 [Merge Request 1](/put/links/here)
 
 [Briefly explain what you did]
+
+- The effects of potions (invisibility and invincibility) has been implemented using a State Pattern. However, the State Pattern hasn't been used
+particularly effectively here and as a result, there is poor design.
+
+> To improve the design and effectively utilize the State Pattern for potion effects, we can refactor the code to separate the
+ potion effects from the Potion class .
+
+- The current implementation of buildable entities contains a significant amount of hard coding. Think about how you can
+improve this.
+
+> The current implementation of Buildable entities suffers from hardcoding.We will create BaseStats class to hold common statistics like durability and defense.And then we will modify Buildable to accept a BaseStats object in its constructor.
 
 [Merge Request 2](/put/links/here)
 
