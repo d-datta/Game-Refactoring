@@ -10,7 +10,7 @@ import dungeonmania.entities.movable.OverlapAction;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public class Sword extends Entity implements InventoryItem, BattleItem, OverlapAction {
+public class Sword extends Entity implements InventoryItem, BattleItem, OverlapAction, Collectable {
     public static final double DEFAULT_ATTACK = 1;
     public static final double DEFAULT_ATTACK_SCALE_FACTOR = 1;
     public static final int DEFAULT_DURABILITY = 5;
@@ -34,8 +34,13 @@ public class Sword extends Entity implements InventoryItem, BattleItem, OverlapA
     @Override
     public void onOverlap(GameMap map, Entity entity) {
         if (entity instanceof Player) {
-            if (!((Player) entity).pickUp(this))
-                return;
+            onPickup((Player) entity, map);
+        }
+    }
+
+    @Override
+    public void onPickup(Player player, GameMap map) {
+        if (player.pickUp(this)) {
             map.destroyEntity(this);
         }
     }
