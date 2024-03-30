@@ -13,10 +13,12 @@ import dungeonmania.util.Position;
 
 public abstract class Potion extends Entity implements InventoryItem, BattleItem, OverlapAction, Collectable {
     private int duration;
+    private PotionEffect effect;
 
-    public Potion(Position position, int duration) {
+    public Potion(Position position, int duration, PotionEffect effect) {
         super(position);
         this.duration = duration;
+        this.effect  = effect;
     }
 
     @Override
@@ -49,7 +51,7 @@ public abstract class Potion extends Entity implements InventoryItem, BattleItem
 
     @Override
     public BattleStatistics applyBuff(BattleStatistics origin) {
-        return origin;
+        return effect.applyEffect(origin);
     }
 
     @Override
