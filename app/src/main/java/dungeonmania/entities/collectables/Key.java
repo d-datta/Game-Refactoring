@@ -7,7 +7,7 @@ import dungeonmania.entities.movable.OverlapAction;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public class Key extends Entity implements InventoryItem, OverlapAction {
+public class Key extends Entity implements InventoryItem, OverlapAction, Collectable {
     private int number;
 
     public Key(Position position, int number) {
@@ -23,8 +23,13 @@ public class Key extends Entity implements InventoryItem, OverlapAction {
     @Override
     public void onOverlap(GameMap map, Entity entity) {
         if (entity instanceof Player) {
-            if (!((Player) entity).pickUp(this))
-                return;
+            onPickup((Player) entity, map);
+        }
+    }
+
+    @Override
+    public void onPickup(Player player, GameMap map) {
+        if (player.pickUp(this)) {
             map.destroyEntity(this);
         }
     }

@@ -7,7 +7,7 @@ import dungeonmania.entities.movable.OverlapAction;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public class Arrow extends Entity implements InventoryItem, OverlapAction {
+public class Arrow extends Entity implements InventoryItem, OverlapAction, Collectable {
     public Arrow(Position position) {
         super(position);
     }
@@ -20,10 +20,14 @@ public class Arrow extends Entity implements InventoryItem, OverlapAction {
     @Override
     public void onOverlap(GameMap map, Entity entity) {
         if (entity instanceof Player) {
-            if (!((Player) entity).pickUp(this))
-                return;
-            map.destroyEntity(this);
+            onPickup((Player) entity, map);
         }
     }
 
+    @Override
+    public void onPickup(Player player, GameMap map) {
+        if (player.pickUp(this)) {
+            map.destroyEntity(this);
+        }
+    }
 }
